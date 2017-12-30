@@ -1,0 +1,46 @@
+# Blender MTL File: 'scan1.blend'
+# Material Count: 4
+
+newmtl _0.001
+Ns 5.882353
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.601382 0.601382 0.601382
+Ke 1.104000 1.104000 1.104000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd textures/twinningImage_0.png
+
+newmtl _0_
+Ns 5.882353
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd /twinningImage_0_.png
+
+newmtl m2
+Ns 5.882353
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd /twinningImage2.png
+
+newmtl material0
+Ns 5.882353
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.528000 0.528000 0.528000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd /Users/mac/Documents/LoVid/shark attack /twinningImagematerial0.png

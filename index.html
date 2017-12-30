@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - multiple canvases - grid</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			html, body {
+				color: #808080;
+				font-family: Monospace;
+				font-size: 13px;
+				text-align: center;
+				background-color: #fff;
+				margin: 0px;
+				overflow: hidden;
+				width: 100%;
+				height: 100%;
+			}
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+			#centerer {
+				display: table;
+				width: 100%;
+				height: 100%;
+			}
+			#centerer-cell {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			#container {
+				margin-left: auto;
+				margin-right: auto;
+				width: 906px;  /* 300*3 + border; */
+			}
+			#container div {
+				float: left;
+			}
+			#canvas1, #canvas2, #canvas3, #canvas4, #canvas5, #canvas6, #canvas7, #canvas8, #canvas9{
+				position: relative;
+				width: 300px;
+				height: 200px;
+				border: 1px solid black;
+				float: left;
+			}
+			a {
+				color: #0080ff;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="centerer">
+			<div id="centerer-cell">
+				<div id="container">
+					<div class="container-row">
+						<canvas id="canvas1"></canvas>
+						<canvas id="canvas2"></canvas>
+						<canvas id="canvas3"></canvas>
+					</div>
+					<div class="container-row">
+						<canvas id="canvas4"></canvas>
+						<canvas id="canvas5"></canvas>
+						<canvas id="canvas6"></canvas>
+					</div>
+					<div class="container-row">
+						<canvas id="canvas7"></canvas>
+						<canvas id="canvas8"></canvas>
+						<canvas id="canvas9"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="info">lovid: objs</div>
+
+		<script src="build/three.js"></script>
+
+		<script src="js/Detector.js"></script>
+		<script src="js/loaders/DDSLoader.js"></script>
+		<script src="js/loaders/MTLLoader.js"></script>
+		<script src="js/loaders/OBJLoader.js"></script>
+
+		<script src="js/Detector.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+
+		<script>
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+			var views = [];
+			var scene, renderer;
+			var mouseX = 0, mouseY = 0;
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+			init();
+			animate();
+			//
+			function View( canvas, fullWidth, fullHeight, viewX, viewY, viewWidth, viewHeight ) {
+				canvas.width = viewWidth * window.devicePixelRatio;
+				canvas.height = viewHeight * window.devicePixelRatio;
+				var context = canvas.getContext( '2d' );
+				var camera = new THREE.PerspectiveCamera( 20, viewWidth / viewHeight, 1, 10000 );
+				camera.setViewOffset( fullWidth, fullHeight, viewX, viewY, viewWidth, viewHeight );
+				camera.position.z = 75;
+				this.render = function () {
+					//camera.position.x += ( mouseX - camera.position.x ) * 0.01;
+					//camera.position.y += ( - mouseY - camera.position.y ) * 0.01;
+					camera.lookAt( scene.position );
+					renderer.render( scene, camera );
+					context.drawImage( renderer.domElement, 0, 0 );
+				};
+			}
+			//
+			function init() {
+				var canvas1 = document.getElementById( 'canvas1' );
+				var canvas2 = document.getElementById( 'canvas2' );
+				var canvas3 = document.getElementById( 'canvas3' );
+				var canvas4 = document.getElementById( 'canvas4' );
+				var canvas5 = document.getElementById( 'canvas5' );
+				var canvas6 = document.getElementById( 'canvas6' );
+				var canvas7 = document.getElementById( 'canvas7' );
+				var canvas8 = document.getElementById( 'canvas8' );
+				var canvas9 = document.getElementById( 'canvas9' );
+				var w = 300, h = 200;
+				var fullWidth = w * 3;
+				var fullHeight = h * 3;
+				views.push( new View( canvas1, fullWidth, fullHeight, w * 0, h * 0, w, h ) );
+				views.push( new View( canvas2, fullWidth, fullHeight, w * 1, h * 0, w, h ) );
+				views.push( new View( canvas3, fullWidth, fullHeight, w * 2, h * 0, w, h ) );
+				views.push( new View( canvas4, fullWidth, fullHeight, w * 0, h * 1, w, h ) );
+				views.push( new View( canvas5, fullWidth, fullHeight, w * 1, h * 1, w, h ) );
+				views.push( new View( canvas6, fullWidth, fullHeight, w * 2, h * 1, w, h ) );
+				views.push( new View( canvas7, fullWidth, fullHeight, w * 0, h * 2, w, h ) );
+				views.push( new View( canvas8, fullWidth, fullHeight, w * 1, h * 2, w, h ) );
+				views.push( new View( canvas9, fullWidth, fullHeight, w * 2, h * 2, w, h ) );
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xffffff );
+				var light = new THREE.DirectionalLight( 0xffffff );
+				light.position.set( 0, 0, 2 ).normalize();
+				scene.add( light );
+				var light2 = new THREE.DirectionalLight( 0xffffff );
+				light.position.set( 0, 0, 2 ).normalize();
+				scene.add( light );
+				var light3 = new THREE.DirectionalLight( 0xffffff );
+				light.position.set( 0, 30, 0 ).normalize();
+				scene.add( light );
+
+				var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+				hemiLight.color.setHSL( 0.6, 1, 0.6 );
+				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+				hemiLight.position.set( 0, 10, 0 );
+				scene.add( hemiLight );
+				hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+				hemiLight.color.setHSL( 0.6, 1, 0.6 );
+				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+				hemiLight.position.set( 0, 10, -50 );
+				scene.add( hemiLight );
+
+				var amblight = new THREE.AmbientLight( 0x404040 ); // soft white light
+				scene.add( light );
+
+
+				// shadow
+				var canvas = document.createElement( 'canvas' );
+				canvas.width = 128;
+				canvas.height = 128;
+				var context = canvas.getContext( '2d' );
+
+				// mtl and obj model loader v 1 
+				var onProgress = function ( xhr ) {
+					if ( xhr.lengthComputable ) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+					}
+				};
+				var onError = function ( xhr ) { };
+				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
+				//canvas 1 
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( '/obj/lovid/Scan2/' );
+				mtlLoader.load( 'colorscan3-ColorScan3.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( '/obj/lovid/Scan2/' );
+					objLoader.load( 'colorscan3-ColorScan3.obj', function ( object ) {
+						object.position.y = 8;
+						object.position.x = -12;
+						scene.add( object );
+					}, onProgress, onError );
+				});
+				//canvas 2 
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( '/obj/lovid/Scan1/' );
+				mtlLoader.load( 'scan1.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( '/obj/lovid/Scan1/' );
+					objLoader.load( 'scan1.obj', function ( object ) {
+						object.position.y = 8;
+						object.position.x = 0;
+						object.position.z = 0; 
+						object.rotation.x = 0; 
+						scene.add( object );
+					}, onProgress, onError );
+				});
+
+				//canvas 3 
+
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( '/obj/lovid/Scan3/' );
+				mtlLoader.load( 'colorscanfused1-ColorScanFused1.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( '/obj/lovid/Scan3/' );
+					objLoader.load( 'colorscanfused1-ColorScanFused1.obj', function ( object ) {
+						object.position.y = 10;
+						object.position.x = 15;
+						object.position.z = -5; 
+						object.rotation.x = 10; 
+						scene.add( object );
+					}, onProgress, onError );
+				});
+
+				//canvas 4 
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( '/obj/lovid/Scan4/' );
+				mtlLoader.load( 'findme-july24_scan_3_2.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( '/obj/lovid/Scan4/' );
+					objLoader.load( 'findme-july24_scan_3_2.obj', function ( object ) {
+						object.position.y = 0;
+						object.position.x = -15;
+						object.position.z = -5; 
+						object.rotation.x = 2; 
+						object.rotation.y = 5; 
+						scene.add( object );
+					}, onProgress, onError );
+				});
+
+				//canvas5
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( '/obj/lovid/Scan5/' );
+				mtlLoader.load( 'july24scan-Sense.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( '/obj/lovid/Scan5/' );
+					objLoader.load( 'july24scan-Sense.obj', function ( object ) {
+						object.position.y = 0;
+						object.position.x = 0;
+						object.position.z = -10; 
+						object.rotation.x = 4; 
+						object.rotation.y = 0; 
+						scene.add( object );
+					}, onProgress, onError );
+				});
+
+				//canvas 6 
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( '/obj/lovid/Scan6/' );
+				mtlLoader.load( 'Scan6.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( '/obj/lovid/Scan6/' );
+					objLoader.load( 'Scan6.obj', function ( object ) {
+						object.position.y = 0;
+						object.position.x = 15;
+						object.position.z = -5; 
+						object.rotation.x = 0; 
+						object.rotation.y = 2; 
+						object.rotation.z = 2; 
+						scene.add( object );
+					}, onProgress, onError );
+				});
+
+				//canvas 7 
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( '/obj/lovid/Scan7/' );
+				mtlLoader.load( 'scan7.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( '/obj/lovid/Scan7/' );
+					objLoader.load( 'scan7.obj', function ( object ) {
+						object.position.y = -10;
+						object.position.x = -12;
+						object.position.z = 0; 
+						object.rotation.x = 0; 
+						object.rotation.y = 0; 
+						object.rotation.z = 0; 
+						scene.add( object );
+					}, onProgress, onError );
+				});
+
+				//canvas 8 
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( '/obj/lovid/Scan8/' );
+				mtlLoader.load( 'scan8.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( '/obj/lovid/Scan8/' );
+					objLoader.load( 'scan8.obj', function ( object ) {
+						object.position.y = -10;
+						object.position.x = 0;
+						object.position.z = 0; 
+						object.rotation.x = 0; 
+						object.rotation.y = 0; 
+						object.rotation.z = 0; 
+						scene.add( object );
+					}, onProgress, onError );
+				});
+
+				//canvas 9 
+			
+
+
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( '/obj/lovid/Scan9/');
+				mtlLoader.load( 'scan9.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( '/obj/lovid/Scan9/');
+					objLoader.load( 'scan9.obj', function ( object ) {
+						object.position.y = -10;
+						object.position.x = 10;
+						object.position.z = 0; 
+						object.rotation.x = 0; 
+						object.rotation.y = 0; 
+						object.rotation.z = 0; 
+						scene.add( object );
+					}, onProgress, onError );
+				});
+				
+				//
+
+				var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
+				gradient.addColorStop( 0.1, 'rgba(210,210,210,1)' );
+				gradient.addColorStop( 1, 'rgba(255,255,255,1)' );
+				context.fillStyle = gradient;
+				context.fillRect( 0, 0, canvas.width, canvas.height );
+				var shadowTexture = new THREE.CanvasTexture( canvas );
+				var shadowMaterial = new THREE.MeshBasicMaterial( { map: shadowTexture } );
+				var shadowGeo = new THREE.PlaneBufferGeometry( 300, 300, 1, 1 );
+				/*var mesh = new THREE.Mesh( shadowGeo, shadowMaterial );
+				mesh.position.y = - 250;
+				mesh.rotation.x = - Math.PI / 2;
+				scene.add( mesh );
+				var mesh = new THREE.Mesh( shadowGeo, shadowMaterial );
+				mesh.position.x = - 400;
+				mesh.position.y = - 250;
+				mesh.rotation.x = - Math.PI / 2;
+				scene.add( mesh );
+				var mesh = new THREE.Mesh( shadowGeo, shadowMaterial );
+				mesh.position.x = 400;
+				mesh.position.y = - 250;
+				mesh.rotation.x = - Math.PI / 2;
+				scene.add( mesh );
+				var faceIndices = [ 'a', 'b', 'c' ];
+				var radius = 200,
+					geometry1 = new THREE.IcosahedronGeometry( radius, 1 ),
+					geometry2 = new THREE.IcosahedronGeometry( radius, 1 ),
+					geometry3 = new THREE.IcosahedronGeometry( radius, 1 );
+
+				for ( var i = 0; i < geometry1.faces.length; i ++ ) {
+					var f1 = geometry1.faces[ i ];
+					var f2 = geometry2.faces[ i ];
+					var f3 = geometry3.faces[ i ];
+					for ( var j = 0; j < 3; j ++ ) {
+						var vertexIndex = f1[ faceIndices[ j ] ];
+						var p = geometry1.vertices[ vertexIndex ];
+						var color = new THREE.Color( 0xffffff );
+						color.setHSL( ( p.y / radius + 1 ) / 2, 1.0, 0.5 );
+						f1.vertexColors[ j ] = color;
+						var color = new THREE.Color( 0xffffff );
+						color.setHSL( 0.0, ( p.y / radius + 1 ) / 2, 0.5 );
+						f2.vertexColors[ j ] = color;
+						var color = new THREE.Color( 0xffffff );
+						color.setHSL( 0.125 * vertexIndex / geometry1.vertices.length, 1.0, 0.5 );
+						f3.vertexColors[ j ] = color;
+					}
+				}
+				var materials = [
+					new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true, vertexColors: THREE.VertexColors, shininess: 0 } ),
+					new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } )
+				];
+				var group1 = THREE.SceneUtils.createMultiMaterialObject( geometry1, materials );
+				group1.position.x = -400;
+				group1.rotation.x = -1.87;
+				scene.add( group1 );
+				var group2 = THREE.SceneUtils.createMultiMaterialObject( geometry2, materials );
+				group2.position.x = 400;
+				scene.add( group2 );
+				var group3 = THREE.SceneUtils.createMultiMaterialObject( geometry3, materials );
+				scene.add( group3 );*/
+
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( 300, 200 );
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+			}
+			function onDocumentMouseMove( event ) {
+				mouseX = event.clientX - windowHalfX;
+				mouseY = event.clientY - windowHalfY;
+			}
+			function animate() {
+
+				for ( var i = 0; i < views.length; ++i ) {
+					
+					views[ i ].render();
+					
+				}
+
+				requestAnimationFrame( animate );
+				
+			}
+		</script>
+
+	</body>
+</html>
