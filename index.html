@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - multiple canvases - grid</title>
+		<title>lovid.org Young Antiquities</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -55,24 +55,26 @@
 			<div id="centerer-cell">
 				<div id="container">
 					<div class="container-row">
-						<canvas id="canvas1"></canvas>
-						<canvas id="canvas2"></canvas>
-						<canvas id="canvas3"></canvas>
+						<a href="obj/lovid/Scan2/colorscan3-ColorScan3.obj" download="object1.obj" class="dbldownload"><canvas id="canvas1"></a>
+						</canvas>
+						<a href="obj/lovid/Scan1/scan1.obj" download="object2.obj" class="dbldownload" ><canvas id="canvas2"></canvas></a>
+						<a href="obj/lovid/Scan3/colorscanfused1-ColorScanFused1.obj" download="object3.obj" class="dbldownload" ><canvas id="canvas3"></canvas></a>
 					</div>
 					<div class="container-row">
-						<canvas id="canvas4"></canvas>
-						<canvas id="canvas5"></canvas>
-						<canvas id="canvas6"></canvas>
+						<a href="obj/lovid/Scan4/findme-july24_scan_3_2.obj" download="object4.obj" class="dbldownload"><canvas id="canvas4"></canvas></a>
+						<a href="obj/lovid/Scan5/july24scan-Sense.obj" download="object5.obj" class="dbldownload"><canvas id="canvas5"></canvas></a>
+						<a href="obj/lovid/Scan6/Scan6.obj" download="object6.obj" class="dbldownload"><canvas id="canvas6"></canvas></a>
 					</div>
 					<div class="container-row">
-						<canvas id="canvas7"></canvas>
-						<canvas id="canvas8"></canvas>
+						<a href="obj/lovid/Scan7/scan7.obj" download="object7.obj" class="dbldownload"><canvas id="canvas7"></canvas></a>
+						<a href="obj/lovid/Scan8/scan8.obj" download="object5.obj" class="dbldownload"><canvas id="canvas8"></canvas></a>
 						<canvas id="canvas9"></canvas>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div id="info">lovid: objs</div>
+		
 
 		<script src="build/three.js"></script>
 
@@ -87,6 +89,19 @@
 
 		<script src="js/renderers/Projector.js"></script>
 		<script src="js/renderers/CanvasRenderer.js"></script>
+		<script src="js/filesaver/FileSaver.min.js"></script>
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script>
+		//double click to download 
+		jQuery(function($) {
+    		$('.dbldownload').click(function() {
+        	return false;
+    	}).dblclick(function() {
+        	window.location = this.href;
+        	return false;
+    		});
+		});
+		</script>
 
 		<script>
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
@@ -250,7 +265,6 @@
 				});
 
 				//canvas 3 
-
 				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.setPath( 'obj/lovid/Scan3/' );
 				mtlLoader.load( 'colorscanfused1-ColorScanFused1.mtl', function( materials ) {
@@ -455,9 +469,10 @@
 				} else if (mouseClick1 == true){
 					mouseClick1 = false; 
 				}
-				console.log(mouseClick1);
+				//console.log(mouseClick1);
 				//console.log(object1); 
-				if (mouseClick1 == true) { 
+				if (mouseClick1 == true) {
+					//saveAs(object1, 'object1.obj');  
 					object1.position.x = 0; 
 					object1.position.y = 0; 
 					while (object1.position.z <= 50.) {
@@ -480,7 +495,7 @@
 				} else if (mouseClick2 == true){
 					mouseClick2 = false; 
 				}
-				console.log(mouseClick2);
+				//console.log(mouseClick2);
 				//console.log(object1); 
 				if (mouseClick2 == true) { 
 					while (object2.position.z <= 50.) {
@@ -500,7 +515,7 @@
 				} else if (mouseClick3 == true){
 					mouseClick3 = false; 
 				}
-				console.log(mouseClick3);
+				//console.log(mouseClick3);
 				//console.log(object1); 
 				if (mouseClick3 == true) { 
 			
@@ -522,7 +537,7 @@
 				} else if (mouseClick4 == true){
 					mouseClick4 = false; 
 				}
-				console.log(mouseClick4);
+				//console.log(mouseClick4);
 				//console.log(object1); 
 				if (mouseClick4 == true) { 
 					while (object4.position.z <= 45.) {
@@ -542,7 +557,7 @@
 				} else if (mouseClick5 == true){
 					mouseClick5 = false; 
 				}
-				console.log(mouseClick5);
+				//console.log(mouseClick5);
 				//console.log(object1); 
 				if (mouseClick5 == true) { 
 					while (object5.position.z <= 40.) {
@@ -636,9 +651,7 @@
 
 			}
 
-			
-
-
+	
 
 			//all canvases move 
 			function onDocumentMouseMove( event ) {
@@ -650,11 +663,6 @@
 				event.preventDefault();
 
 
-			}
-
-			function export_obj ( object ) {
-				var content = (''); 
-				window.open( content, ''); 
 			}
 
 			function animate() {
