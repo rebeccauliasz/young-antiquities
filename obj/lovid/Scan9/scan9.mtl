@@ -120,7 +120,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /Users/mac/Documents/LoVid/ColorScan2/ArtScan2_T19.jpg
+map_Kd textures/ArtScan2_T18.jpg
 
 newmtl ArtScan2_19
 Ns 96.078431

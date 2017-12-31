@@ -21,7 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 0
-map_Kd /twinningImage_0_.png
+map_Kd twinningImage_0.png
 
 newmtl m2
 Ns 5.882353
@@ -32,7 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 0
-map_Kd /twinningImage2.png
+map_Kd twinningImage_0.png
 
 newmtl material0
 Ns 5.882353
@@ -43,4 +43,4 @@ Ke 0.528000 0.528000 0.528000
 Ni 1.000000
 d 1.000000
 illum 0
-map_Kd /Users/mac/Documents/LoVid/shark attack /twinningImagematerial0.png
+map_Kd twinningImagematerial0.png

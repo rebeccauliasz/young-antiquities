@@ -80,20 +80,53 @@
 		<script src="js/loaders/DDSLoader.js"></script>
 		<script src="js/loaders/MTLLoader.js"></script>
 		<script src="js/loaders/OBJLoader.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
 
 		<script src="js/Detector.js"></script>
 		<script src="js/libs/stats.min.js"></script>
+
+		<script src="js/renderers/Projector.js"></script>
+		<script src="js/renderers/CanvasRenderer.js"></script>
 
 		<script>
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 			var views = [];
 			var scene, renderer;
+			var contols; 
+			//var cameras = []; 
 			var mouseX = 0, mouseY = 0;
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
+
+		
+			var SCREEN_HEIGHT = window.innerHeight;
+			var SCREEN_WIDTH = window.innerWidth;
+			var mouse; 
+			//var objects = []; 
+
+			mouse = new THREE.Vector2();
+			var mouseDown = false;
+
+			var object1; 
+			var object2; 
+			var object3; 
+			var object4; 
+			var object5; 
+			var object6; 
+			var object7; 
+			var object8; 
+			var object9; 
+
 			init();
 			animate();
-			//
+
+
+
+
+			
+		
+
+			//camera
 			function View( canvas, fullWidth, fullHeight, viewX, viewY, viewWidth, viewHeight ) {
 				canvas.width = viewWidth * window.devicePixelRatio;
 				canvas.height = viewHeight * window.devicePixelRatio;
@@ -102,12 +135,15 @@
 				camera.setViewOffset( fullWidth, fullHeight, viewX, viewY, viewWidth, viewHeight );
 				camera.position.z = 75;
 				this.render = function () {
-					//camera.position.x += ( mouseX - camera.position.x ) * 0.01;
-					//camera.position.y += ( - mouseY - camera.position.y ) * 0.01;
+					camera.position.x += ( mouseX/15 - camera.position.x ) * 0.01;
+					camera.position.y += ( - mouseY/15 - camera.position.y ) * 0.01;
 					camera.lookAt( scene.position );
 					renderer.render( scene, camera );
 					context.drawImage( renderer.domElement, 0, 0 );
 				};
+				//cameras.push(camera); 
+				
+
 			}
 			//
 			function init() {
@@ -123,6 +159,7 @@
 				var w = 300, h = 200;
 				var fullWidth = w * 3;
 				var fullHeight = h * 3;
+
 				views.push( new View( canvas1, fullWidth, fullHeight, w * 0, h * 0, w, h ) );
 				views.push( new View( canvas2, fullWidth, fullHeight, w * 1, h * 0, w, h ) );
 				views.push( new View( canvas3, fullWidth, fullHeight, w * 2, h * 0, w, h ) );
@@ -132,6 +169,8 @@
 				views.push( new View( canvas7, fullWidth, fullHeight, w * 0, h * 2, w, h ) );
 				views.push( new View( canvas8, fullWidth, fullHeight, w * 1, h * 2, w, h ) );
 				views.push( new View( canvas9, fullWidth, fullHeight, w * 2, h * 2, w, h ) );
+
+
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xffffff );
 				var light = new THREE.DirectionalLight( 0xffffff );
@@ -165,6 +204,7 @@
 				canvas.height = 128;
 				var context = canvas.getContext( '2d' );
 
+
 				// mtl and obj model loader v 1 
 				var onProgress = function ( xhr ) {
 					if ( xhr.lengthComputable ) {
@@ -177,61 +217,65 @@
 
 				//canvas 1 
 				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( '/obj/lovid/Scan2/' );
+				mtlLoader.setPath( 'obj/lovid/Scan2/' );
 				mtlLoader.load( 'colorscan3-ColorScan3.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
 					objLoader.setMaterials( materials );
-					objLoader.setPath( '/obj/lovid/Scan2/' );
+					objLoader.setPath( 'obj/lovid/Scan2/' );
 					objLoader.load( 'colorscan3-ColorScan3.obj', function ( object ) {
 						object.position.y = 8;
 						object.position.x = -12;
 						scene.add( object );
+						object1 = object;  
 					}, onProgress, onError );
 				});
 				//canvas 2 
 				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( '/obj/lovid/Scan1/' );
+				mtlLoader.setPath( 'obj/lovid/Scan1/' );
 				mtlLoader.load( 'scan1.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
 					objLoader.setMaterials( materials );
-					objLoader.setPath( '/obj/lovid/Scan1/' );
+					objLoader.setPath( 'obj/lovid/Scan1/' );
 					objLoader.load( 'scan1.obj', function ( object ) {
 						object.position.y = 8;
 						object.position.x = 0;
 						object.position.z = 0; 
 						object.rotation.x = 0; 
 						scene.add( object );
+						object2 = object; 
+						//objects.push(object);
 					}, onProgress, onError );
 				});
 
 				//canvas 3 
 
 				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( '/obj/lovid/Scan3/' );
+				mtlLoader.setPath( 'obj/lovid/Scan3/' );
 				mtlLoader.load( 'colorscanfused1-ColorScanFused1.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
 					objLoader.setMaterials( materials );
-					objLoader.setPath( '/obj/lovid/Scan3/' );
+					objLoader.setPath( 'obj/lovid/Scan3/' );
 					objLoader.load( 'colorscanfused1-ColorScanFused1.obj', function ( object ) {
 						object.position.y = 10;
 						object.position.x = 15;
 						object.position.z = -5; 
 						object.rotation.x = 10; 
 						scene.add( object );
+						object3 = object; 
 					}, onProgress, onError );
 				});
 
 				//canvas 4 
 				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( '/obj/lovid/Scan4/' );
+				mtlLoader.setPath( 'obj/lovid/Scan4/' );
 				mtlLoader.load( 'findme-july24_scan_3_2.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
 					objLoader.setMaterials( materials );
-					objLoader.setPath( '/obj/lovid/Scan4/' );
+					objLoader.setPath( 'obj/lovid/Scan4/' );
 					objLoader.load( 'findme-july24_scan_3_2.obj', function ( object ) {
 						object.position.y = 0;
 						object.position.x = -15;
@@ -239,17 +283,18 @@
 						object.rotation.x = 2; 
 						object.rotation.y = 5; 
 						scene.add( object );
+						object4 = object; 
 					}, onProgress, onError );
 				});
 
 				//canvas5
 				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( '/obj/lovid/Scan5/' );
+				mtlLoader.setPath( 'obj/lovid/Scan5/' );
 				mtlLoader.load( 'july24scan-Sense.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
 					objLoader.setMaterials( materials );
-					objLoader.setPath( '/obj/lovid/Scan5/' );
+					objLoader.setPath( 'obj/lovid/Scan5/' );
 					objLoader.load( 'july24scan-Sense.obj', function ( object ) {
 						object.position.y = 0;
 						object.position.x = 0;
@@ -257,17 +302,18 @@
 						object.rotation.x = 4; 
 						object.rotation.y = 0; 
 						scene.add( object );
+						object5 = object; 
 					}, onProgress, onError );
 				});
 
 				//canvas 6 
 				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( '/obj/lovid/Scan6/' );
+				mtlLoader.setPath( 'obj/lovid/Scan6/' );
 				mtlLoader.load( 'Scan6.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
 					objLoader.setMaterials( materials );
-					objLoader.setPath( '/obj/lovid/Scan6/' );
+					objLoader.setPath( 'obj/lovid/Scan6/' );
 					objLoader.load( 'Scan6.obj', function ( object ) {
 						object.position.y = 0;
 						object.position.x = 15;
@@ -276,36 +322,38 @@
 						object.rotation.y = 2; 
 						object.rotation.z = 2; 
 						scene.add( object );
+						object6 = object; 
 					}, onProgress, onError );
 				});
 
 				//canvas 7 
 				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( '/obj/lovid/Scan7/' );
+				mtlLoader.setPath( 'obj/lovid/Scan7/' );
 				mtlLoader.load( 'scan7.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
 					objLoader.setMaterials( materials );
-					objLoader.setPath( '/obj/lovid/Scan7/' );
+					objLoader.setPath( 'obj/lovid/Scan7/' );
 					objLoader.load( 'scan7.obj', function ( object ) {
 						object.position.y = -10;
-						object.position.x = -12;
+						object.position.x = -13;
 						object.position.z = 0; 
 						object.rotation.x = 0; 
-						object.rotation.y = 0; 
-						object.rotation.z = 0; 
+						object.rotation.y = 10; 
+						object.rotation.z = 2; 
 						scene.add( object );
+						object7 = object; 
 					}, onProgress, onError );
 				});
 
 				//canvas 8 
 				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( '/obj/lovid/Scan8/' );
+				mtlLoader.setPath( 'obj/lovid/Scan8/' );
 				mtlLoader.load( 'scan8.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
 					objLoader.setMaterials( materials );
-					objLoader.setPath( '/obj/lovid/Scan8/' );
+					objLoader.setPath( 'obj/lovid/Scan8/' );
 					objLoader.load( 'scan8.obj', function ( object ) {
 						object.position.y = -10;
 						object.position.x = 0;
@@ -314,103 +362,301 @@
 						object.rotation.y = 0; 
 						object.rotation.z = 0; 
 						scene.add( object );
+						object8 = object; 
 					}, onProgress, onError );
 				});
 
 				//canvas 9 
-			
-
-
+				
 				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setPath( '/obj/lovid/Scan9/');
-				mtlLoader.load( 'scan9.mtl', function( materials ) {
+				mtlLoader.setPath( 'obj/lovid/Scan2/');
+				mtlLoader.load( 'colorscan3-ColorScan3.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
 					objLoader.setMaterials( materials );
-					objLoader.setPath( '/obj/lovid/Scan9/');
-					objLoader.load( 'scan9.obj', function ( object ) {
+					objLoader.setPath( 'obj/lovid/Scan2/');
+					objLoader.load( 'colorscan3-ColorScan3.obj', function ( object ) {
 						object.position.y = -10;
-						object.position.x = 10;
+						object.position.x = 13;
 						object.position.z = 0; 
 						object.rotation.x = 0; 
-						object.rotation.y = 0; 
+						object.rotation.y = 10; 
 						object.rotation.z = 0; 
 						scene.add( object );
+						object9 = object; 
 					}, onProgress, onError );
 				});
 				
 				//
 
+			
+
+
 				var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
-				gradient.addColorStop( 0.1, 'rgba(210,210,210,1)' );
-				gradient.addColorStop( 1, 'rgba(255,255,255,1)' );
-				context.fillStyle = gradient;
-				context.fillRect( 0, 0, canvas.width, canvas.height );
-				var shadowTexture = new THREE.CanvasTexture( canvas );
-				var shadowMaterial = new THREE.MeshBasicMaterial( { map: shadowTexture } );
-				var shadowGeo = new THREE.PlaneBufferGeometry( 300, 300, 1, 1 );
-				/*var mesh = new THREE.Mesh( shadowGeo, shadowMaterial );
-				mesh.position.y = - 250;
-				mesh.rotation.x = - Math.PI / 2;
-				scene.add( mesh );
-				var mesh = new THREE.Mesh( shadowGeo, shadowMaterial );
-				mesh.position.x = - 400;
-				mesh.position.y = - 250;
-				mesh.rotation.x = - Math.PI / 2;
-				scene.add( mesh );
-				var mesh = new THREE.Mesh( shadowGeo, shadowMaterial );
-				mesh.position.x = 400;
-				mesh.position.y = - 250;
-				mesh.rotation.x = - Math.PI / 2;
-				scene.add( mesh );
-				var faceIndices = [ 'a', 'b', 'c' ];
-				var radius = 200,
-					geometry1 = new THREE.IcosahedronGeometry( radius, 1 ),
-					geometry2 = new THREE.IcosahedronGeometry( radius, 1 ),
-					geometry3 = new THREE.IcosahedronGeometry( radius, 1 );
-
-				for ( var i = 0; i < geometry1.faces.length; i ++ ) {
-					var f1 = geometry1.faces[ i ];
-					var f2 = geometry2.faces[ i ];
-					var f3 = geometry3.faces[ i ];
-					for ( var j = 0; j < 3; j ++ ) {
-						var vertexIndex = f1[ faceIndices[ j ] ];
-						var p = geometry1.vertices[ vertexIndex ];
-						var color = new THREE.Color( 0xffffff );
-						color.setHSL( ( p.y / radius + 1 ) / 2, 1.0, 0.5 );
-						f1.vertexColors[ j ] = color;
-						var color = new THREE.Color( 0xffffff );
-						color.setHSL( 0.0, ( p.y / radius + 1 ) / 2, 0.5 );
-						f2.vertexColors[ j ] = color;
-						var color = new THREE.Color( 0xffffff );
-						color.setHSL( 0.125 * vertexIndex / geometry1.vertices.length, 1.0, 0.5 );
-						f3.vertexColors[ j ] = color;
-					}
-				}
-				var materials = [
-					new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true, vertexColors: THREE.VertexColors, shininess: 0 } ),
-					new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } )
-				];
-				var group1 = THREE.SceneUtils.createMultiMaterialObject( geometry1, materials );
-				group1.position.x = -400;
-				group1.rotation.x = -1.87;
-				scene.add( group1 );
-				var group2 = THREE.SceneUtils.createMultiMaterialObject( geometry2, materials );
-				group2.position.x = 400;
-				scene.add( group2 );
-				var group3 = THREE.SceneUtils.createMultiMaterialObject( geometry3, materials );
-				scene.add( group3 );*/
-
-
+		
+				
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( 300, 200 );
+				document.body.appendChild(renderer.domElement);
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+
+
+				canvas1.addEventListener( 'mousemove', onCanvas1MouseMove, false );
+				canvas1.addEventListener( 'mousedown', onCanvas1MouseDown, false );
+				canvas2.addEventListener( 'mousedown', onCanvas2MouseDown, false );
+				canvas3.addEventListener( 'mousedown', onCanvas3MouseDown, false );
+				canvas4.addEventListener( 'mousedown', onCanvas4MouseDown, false );
+				canvas5.addEventListener( 'mousedown', onCanvas5MouseDown, false );
+				canvas6.addEventListener( 'mousedown', onCanvas6MouseDown, false );
+				canvas7.addEventListener( 'mousedown', onCanvas7MouseDown, false );
+				canvas8.addEventListener( 'mousedown', onCanvas8MouseDown, false );
+				canvas9.addEventListener( 'mousedown', onCanvas9MouseDown, false );
+
+				
+				//console.log(cameras.length); 
+				console.log(views.length); 
+
+			
 			}
+			
+			//check for mouse click on each canvas
+			//true brings object[] forward on the z axis 
+			var mouseClick1 = false;  
+			var mouseClick2 = false; 
+			var mouseClick3 = false; 
+			var mouseClick4 = false; 
+			var mouseClick5 = false;
+			var mouseClick6 = false;
+			var mouseClick7 = false;
+			var mouseClick8 = false;
+			var mouseClick9 = false;
+
+			function onCanvas1MouseMove( event ) { 
+				
+				if (!mouseClick1) {
+            		return;
+        		}
+        	 	
+        		/*evt.preventDefault();
+        		var object1 = objects[0];
+        		var deltaX = evt.clientX - mouseX, 
+            		deltaY = evt.clientY - mouseY;
+        		mouseX = evt.clientX;
+        		mouseY = evt.clientY;
+        		rotateScene1(deltaX, deltaY);*/
+    		}
+
+    		function onCanvas1MouseDown( event ) {
+				event.preventDefault(); 
+				if (mouseClick1 == false) { 
+					mouseClick1 = true; 
+				} else if (mouseClick1 == true){
+					mouseClick1 = false; 
+				}
+				console.log(mouseClick1);
+				//console.log(object1); 
+				if (mouseClick1 == true) { 
+					object1.position.x = 0; 
+					object1.position.y = 0; 
+					while (object1.position.z <= 50.) {
+        				object1.position.z += .001; 
+        				object1.position.x = -12; 
+						object1.position.y = 8; 
+        		
+        			}	
+        		}
+        		else if (mouseClick1 == false){ 
+        			object1.position.z = 0; 
+
+        		}	
+
+			}
+			function onCanvas2MouseDown( event ) {
+				event.preventDefault(); 
+				if (mouseClick2 == false) { 
+					mouseClick2 = true; 
+				} else if (mouseClick2 == true){
+					mouseClick2 = false; 
+				}
+				console.log(mouseClick2);
+				//console.log(object1); 
+				if (mouseClick2 == true) { 
+					while (object2.position.z <= 50.) {
+        				object2.position.z += .001; 
+        		
+        			}	
+        		}
+        		else if (mouseClick2 == false){ 
+        			object2.position.z = 0; 
+        		}	
+
+			}
+			function onCanvas3MouseDown( event ) {
+				event.preventDefault(); 
+				if (mouseClick3 == false) { 
+					mouseClick3 = true; 
+				} else if (mouseClick3 == true){
+					mouseClick3 = false; 
+				}
+				console.log(mouseClick3);
+				//console.log(object1); 
+				if (mouseClick3 == true) { 
+			
+					while (object3.position.z <= 45.) {
+        				object3.position.z += .001; 
+        		
+        			}	
+        		}
+        		else if (mouseClick3 == false){ 
+        			object3.position.z = -5.; 
+        		
+        		}	
+
+			}
+			function onCanvas4MouseDown( event ) {
+				event.preventDefault(); 
+				if (mouseClick4 == false) { 
+					mouseClick4 = true; 
+				} else if (mouseClick4 == true){
+					mouseClick4 = false; 
+				}
+				console.log(mouseClick4);
+				//console.log(object1); 
+				if (mouseClick4 == true) { 
+					while (object4.position.z <= 45.) {
+        				object4.position.z += .001; 
+        		
+        			}	
+        		}
+        		else if (mouseClick4 == false){ 
+        			object4.position.z = -5.; 
+        		}	
+
+			}
+			function onCanvas5MouseDown( event ) {
+				event.preventDefault(); 
+				if (mouseClick5 == false) { 
+					mouseClick5 = true; 
+				} else if (mouseClick5 == true){
+					mouseClick5 = false; 
+				}
+				console.log(mouseClick5);
+				//console.log(object1); 
+				if (mouseClick5 == true) { 
+					while (object5.position.z <= 40.) {
+        				object5.position.z += .001; 
+        		
+        			}	
+        		}
+        		else if (mouseClick5 == false){ 
+        			object5.position.z = -10.; 
+        		}	
+
+			}
+			function onCanvas6MouseDown( event ) {
+				event.preventDefault(); 
+				if (mouseClick6 == false) { 
+					mouseClick6 = true; 
+				} else if (mouseClick6 == true){
+					mouseClick6 = false; 
+				}
+				console.log(mouseClick6);
+				//console.log(object1); 
+				if (mouseClick6 == true) { 
+					while (object6.position.z <= 45.) {
+        				object6.position.z += .001; 
+        		
+        			}	
+        		}
+        		else if (mouseClick6 == false){ 
+        			object6.position.z = -5.; 
+        		}	
+
+			}
+			function onCanvas7MouseDown( event ) {
+				event.preventDefault(); 
+				if (mouseClick7 == false) { 
+					mouseClick7 = true; 
+				} else if (mouseClick7 == true){
+					mouseClick7 = false; 
+				}
+				console.log(mouseClick7);
+				//console.log(object1); 
+				if (mouseClick7 == true) { 
+					while (object7.position.z <= 50.) {
+        				object7.position.z += .001; 
+        		
+        			}	
+        		}
+        		else if (mouseClick7 == false){ 
+        			object7.position.z = 0.; 
+        		}	
+
+			}
+			function onCanvas8MouseDown( event ) {
+				event.preventDefault(); 
+				if (mouseClick8 == false) { 
+					mouseClick8 = true; 
+				} else if (mouseClick8 == true){
+					mouseClick8 = false; 
+				}
+				console.log(mouseClick8);
+				//console.log(object1); 
+				if (mouseClick8 == true) { 
+					while (object8.position.z <= 50.) {
+        				object8.position.z += .001; 
+        		
+        			}	
+        		}
+        		else if (mouseClick8 == false){ 
+        			object8.position.z = 0.; 
+        		}	
+
+			}
+			function onCanvas9MouseDown( event ) {
+				event.preventDefault(); 
+				if (mouseClick9 == false) { 
+					mouseClick9 = true; 
+				} else if (mouseClick9 == true){
+					mouseClick9 = false; 
+				}
+				console.log(mouseClick9);
+				//console.log(object1); 
+				if (mouseClick9 == true) { 
+					while (object9.position.z <= 50.) {
+        				object9.position.z += .001; 
+        		
+        			}	
+        		}
+        		else if (mouseClick9 == false){ 
+        			object9.position.z = 0.; 
+        		}	
+
+			}
+
+			
+
+
+
+			//all canvases move 
 			function onDocumentMouseMove( event ) {
 				mouseX = event.clientX - windowHalfX;
 				mouseY = event.clientY - windowHalfY;
 			}
+			// click on object
+			function onDocumentMouseDown( event ) {
+				event.preventDefault();
+
+
+			}
+
+			function export_obj ( object ) {
+				var content = (''); 
+				window.open( content, ''); 
+			}
+
 			function animate() {
 
 				for ( var i = 0; i < views.length; ++i ) {
@@ -418,10 +664,34 @@
 					views[ i ].render();
 					
 				}
+				
+				
 
 				requestAnimationFrame( animate );
 				
 			}
+
+/*
+			function render() {
+
+				raycaster.setFromCamera( mouse, camera );
+
+				var intersects = raycaster.intersectObjects( scene.canvas );
+
+				if ( intersects.length > 0 ) {
+					if ( INTERSECTED != intersects[ 0 ].object ) {
+						if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+						INTERSECTED = intersects[ 0 ].object;
+						INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+						INTERSECTED.material.emissive.setHex( 0xff0000 );
+					}
+				} else {
+					if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+					INTERSECTED = null;
+				}
+				renderer.render( scene, camera )
+
+			}*/
 		</script>
 
 	</body>

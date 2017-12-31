@@ -21,7 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3/ColorScan3_T2.jpg
+map_Kd ColorScan3_T2.jpg
 
 newmtl ColorScan3_10
 Ns 94.117647
@@ -32,7 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T11.jpg
+map_Kd ColorScan3_T11.jpg
 
 newmtl ColorScan3_11
 Ns 94.117647
@@ -43,7 +43,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T12.jpg
+map_Kd ColorScan3_T12.jpg
 
 newmtl ColorScan3_12
 Ns 94.117647
@@ -54,7 +54,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T13.jpg
+map_Kd ColorScan3_T13.jpg
 
 newmtl ColorScan3_13
 Ns 94.117647
@@ -65,7 +65,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T14.jpg
+map_Kd ColorScan3_T14.jpg
 
 newmtl ColorScan3_13_ColorScan3_T14.jpg
 Ns 94.117647
@@ -76,7 +76,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T14.jpg
+map_Kd ColorScan3_T14.jpg
 
 newmtl ColorScan3_14
 Ns 94.117647
@@ -87,7 +87,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T15.jpg
+map_Kd ColorScan3_T15.jpg
 
 newmtl ColorScan3_15
 Ns 94.117647
@@ -98,7 +98,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T16.jpg
+map_Kd ColorScan3_T16.jpg
 
 newmtl ColorScan3_16
 Ns 94.117647
@@ -109,7 +109,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T17.jpg
+map_Kd ColorScan3_T17.jpg
 
 newmtl ColorScan3_17
 Ns 94.117647
@@ -120,7 +120,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T18.jpg
+map_Kd ColorScan3_T18.jpg
 
 newmtl ColorScan3_2
 Ns 94.117647
@@ -131,7 +131,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T3.jpg
+map_Kd ColorScan3_T3.jpg
 
 newmtl ColorScan3_3
 Ns 94.117647
@@ -142,7 +142,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T4.jpg
+map_Kd ColorScan3_T4.jpg
 
 newmtl ColorScan3_4
 Ns 94.117647
@@ -153,7 +153,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T5.jpg
+map_Kd ColorScan3_T5.jpg
 
 newmtl ColorScan3_5
 Ns 94.117647
@@ -164,7 +164,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T6.jpg
+map_Kd ColorScan3_T6.jpg
 
 newmtl ColorScan3_6
 Ns 94.117647
@@ -175,7 +175,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T7.jpg
+map_Kd ColorScan3_T7.jpg
 
 newmtl ColorScan3_7
 Ns 94.117647
@@ -186,7 +186,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T8.jpg
+map_Kd ColorScan3_T8.jpg
 
 newmtl ColorScan3_8
 Ns 94.117647
@@ -197,7 +197,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T9.jpg
+map_Kd ColorScan3_T9.jpg
 
 newmtl ColorScan3_9
 Ns 94.117647
@@ -208,4 +208,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd /ColorScan3_T10.jpg
+map_Kd ColorScan3_T10.jpg
