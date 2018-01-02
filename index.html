@@ -116,11 +116,15 @@
 		
 			var SCREEN_HEIGHT = window.innerHeight;
 			var SCREEN_WIDTH = window.innerWidth;
-			var mouse; 
 			//var objects = []; 
 
-			mouse = new THREE.Vector2();
+			var mouse = new THREE.Vector2();
 			var mouseDown = false;
+			var raycaster;
+			var raycasters = []; 
+			var intersection = null;
+			var rotateY = new THREE.Matrix4().makeRotationY( 0.005 );
+			var projector = new THREE.Projector();
 
 			var object1; 
 			var object2; 
@@ -143,15 +147,30 @@
 				var camera = new THREE.PerspectiveCamera( 20, viewWidth / viewHeight, 1, 10000 );
 				camera.setViewOffset( fullWidth, fullHeight, viewX, viewY, viewWidth, viewHeight );
 				camera.position.z = 75;
-				var controls = new THREE.OrbitControls( camera ); 
+				//controls = new THREE.OrbitControls( camera, canvas1 ); 
+				//controls.enableZoom = false; 
+				//controls.enablePan = false; 
+				//controls.enableDamping = true; 
+				//controls.target = (0,0,0); 
 				this.render = function () {
 					camera.position.x += ( mouseX/15 - camera.position.x ) * 0.01;
 					camera.position.y += ( - mouseY/15 - camera.position.y ) * 0.01;
 					camera.lookAt( scene.position );
 					renderer.render( scene, camera );
 					context.drawImage( renderer.domElement, 0, 0 );
-					controls.update();
+
+					raycaster.setFromCamera( mouse, camera );
+
+					//controls.update();
 				};
+				//raycaster 
+				var vector = new THREE.Vector3( ( mouseX / window.innerWidth ) * 2 - 1, - ( mouseY / window.innerHeight ) * 2 + 1, 0.5 );
+            	vector.unproject( camera );
+
+            	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+            	raycasters.push( raycaster ); 
+
+
 				//cameras.push(camera); 
 				
 
@@ -216,6 +235,7 @@
 				var context = canvas.getContext( '2d' );
 
 
+
 				// mtl and obj model loader v 1 
 				var onProgress = function ( xhr ) {
 					if ( xhr.lengthComputable ) {
@@ -225,6 +245,7 @@
 				};
 				var onError = function ( xhr ) { };
 				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
 
 				//canvas 1 
 				var mtlLoader = new THREE.MTLLoader();
@@ -238,9 +259,13 @@
 						object.position.y = 8;
 						object.position.x = -12;
 						scene.add( object );
-						object1 = object;  
+						object1 = object; 
+						return object1; 
+						//var controls = new THREE.OrbitControls( object1 );  
 					}, onProgress, onError );
+					
 				});
+
 				//canvas 2 
 				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.setPath( 'obj/lovid/Scan1/' );
@@ -433,6 +458,7 @@
 			
 			}
 			
+
 			//check for mouse click on each canvas
 			//true brings object[] forward on the z axis 
 			/*
@@ -454,7 +480,7 @@
 				
 				if (!mouseClick1) {
             		return;
-        		}
+        		} 
         	 	
         		/*evt.preventDefault();
         		var object1 = objects[0];
@@ -473,7 +499,7 @@
 					mouseClick1 = false; 
 				}
 				//console.log(mouseClick1);
-				//console.log(object1); 
+				console.log(object1); 
 				if (mouseClick1 == true) {
 					//saveAs(object1, 'object1.obj');  
 					object1.position.x = 0; 
@@ -665,6 +691,21 @@
 			function onDocumentMouseDown( event ) {
 				event.preventDefault();
 
+				/*var raycaster = raycasters[0]; 
+				var intersects1 = raycaster.intersectObject( object1, true );
+            	if ( intersects1.length > 0 ) {
+                    console.log("intersected1");
+                }
+                var intersects2 = raycaster.intersectObject( object2, true );
+                if ( intersects2.length > 0 ) {
+                    console.log("intersected2");
+                }
+                var intersects3 = raycaster.intersectObject( object3, true );
+                if ( intersects3.length > 0 ) {
+                    console.log("intersected3");
+                }*/
+
+
 
 			}
 
@@ -674,12 +715,62 @@
 					
 					views[ i ].render();
 					
+				} 
+				//render2(); 
+				if (object1) {
+					if (mouseClick1 == true){
+						object1.rotation.y += .015;
+					}
 				}
-				
-				
+				if (object2) {
+					if (mouseClick2 == true){
+						object2.rotation.y += .015;
+					}
+				}
+				if (object3) {
+					if (mouseClick3 == true){
+						object3.rotation.y += .015;
+					}
+				}
+				if (object4) {
+					if (mouseClick4 == true){
+						object4.rotation.y += .015;
+					}
+				}
+				if (object5) {
+					if (mouseClick5 == true){
+						object5.rotation.y += .015;
+					}
+				}
+				if (object6) {
+					if (mouseClick6 == true){
+						object6.rotation.y += .015;
+					}
+				}
+				if (object7) {
+					if (mouseClick7 == true){
+						object7.rotation.y += .015;
+					}
+				}
+				if (object8) {
+					if (mouseClick8 == true){
+						object8.rotation.y += .015;
+					}
+				}
+				if (object9) {
+					if (mouseClick9 == true){
+						object9.rotation.y += .015;
+					}
+				}
 
 				requestAnimationFrame( animate );
 				
+			}
+
+			function render2() {
+
+				
+				//renderer.render( scene, camera ); 
 			}
 
 /*
