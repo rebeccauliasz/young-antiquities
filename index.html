@@ -73,7 +73,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="info">lovid: objs</div>
+		<div id="info">Young Antiquties</div>
 		
 
 		<script src="build/three.js"></script>
@@ -135,12 +135,6 @@
 			init();
 			animate();
 
-
-
-
-			
-		
-
 			//camera
 			function View( canvas, fullWidth, fullHeight, viewX, viewY, viewWidth, viewHeight ) {
 				canvas.width = viewWidth * window.devicePixelRatio;
@@ -149,12 +143,14 @@
 				var camera = new THREE.PerspectiveCamera( 20, viewWidth / viewHeight, 1, 10000 );
 				camera.setViewOffset( fullWidth, fullHeight, viewX, viewY, viewWidth, viewHeight );
 				camera.position.z = 75;
+				var controls = new THREE.OrbitControls( camera ); 
 				this.render = function () {
 					camera.position.x += ( mouseX/15 - camera.position.x ) * 0.01;
 					camera.position.y += ( - mouseY/15 - camera.position.y ) * 0.01;
 					camera.lookAt( scene.position );
 					renderer.render( scene, camera );
 					context.drawImage( renderer.domElement, 0, 0 );
+					controls.update();
 				};
 				//cameras.push(camera); 
 				
@@ -381,8 +377,8 @@
 				});
 
 				//canvas 9 
-				
-				var mtlLoader = new THREE.MTLLoader();
+				/*
+				var mtlLoader = new THREE.MTLLoader()	6
 				mtlLoader.setPath( 'obj/lovid/Scan2/');
 				mtlLoader.load( 'colorscan3-ColorScan3.mtl', function( materials ) {
 					materials.preload();
@@ -399,7 +395,7 @@
 						scene.add( object );
 						object9 = object; 
 					}, onProgress, onError );
-				});
+				});*/
 				
 				//
 
@@ -428,6 +424,8 @@
 				canvas8.addEventListener( 'mousedown', onCanvas8MouseDown, false );
 				canvas9.addEventListener( 'mousedown', onCanvas9MouseDown, false );
 
+				//rotateControls(); 
+
 				
 				//console.log(cameras.length); 
 				console.log(views.length); 
@@ -437,6 +435,11 @@
 			
 			//check for mouse click on each canvas
 			//true brings object[] forward on the z axis 
+			/*
+			function rotateControls() { 
+				controls = new THREE.OrbitControls( object1 );
+			}*/
+
 			var mouseClick1 = false;  
 			var mouseClick2 = false; 
 			var mouseClick3 = false; 
