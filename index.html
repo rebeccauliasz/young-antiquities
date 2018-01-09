@@ -16,6 +16,29 @@
 				width: 100%;
 				height: 100%;
 			}
+			#background-left {
+	position: absolute;
+	bottom: 0;
+	width: 300px;
+	z-index: 0;
+	overflow: hidden;
+	top: 90px;
+	left: 9px;
+	text-align: left;
+	line-height: 1.7;
+			}
+			#background-right {
+	position: absolute;
+	bottom: 0;
+	width: 300px;
+	z-index: 0;
+	overflow: hidden;
+	top: 90px;
+	right: 5px;
+	text-align: left;
+	line-height: 1.7;
+				word-spacing: 5px;
+			}
 			#info {
 				position: absolute;
 				top: 0px; width: 100%;
@@ -31,6 +54,7 @@
 				vertical-align: middle;
 			}
 			#container {
+				position: relative; 
 				margin-left: auto;
 				margin-right: auto;
 				width: 906px;  /* 300*3 + border; */
@@ -45,17 +69,34 @@
 				border: 1px solid black;
 				float: left;
 			}
+			#canvas9 { 
+				background-color: white;
+			}
 			a {
 				color: #0080ff;
+			}
+			#instruction-text{
+	text-align: left;
+	font: normal;
+	color: #808080;
+	font-family: Monospace;
+	padding-top: 0px;
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-bottom: 20px;
+	font-size: 20px;
+	position: relative;
 			}
 		</style>
 	</head>
 	<body>
-		<div id="centerer">
+	<div id="centerer">
 			<div id="centerer-cell">
-				<div id="container">
-					<div class="container-row">
-						<a href="obj/lovid/Scan2/colorscan3-ColorScan3.obj" download="object1.obj" class="dbldownload"><canvas id="canvas1"></a>
+				<div id="background-left">Young Antiquities, a series of media objects, embraces relationships between time and physical presence, a utopian post-material world and the reality of decomposition. Using an array of 3D capture devices we translated textile sculptures from our Video Taxidermy series into virtual form. These digital re-compositions are presented as animated virtual sculptures in GIF form in an online exhibition at <a href= www.klausgallery.net>klausgallery.net</a> and here at 3D objects ready to download and print.<br><br><br><br>--<br><br>LoVid is 2017 NYSCA/NYFA artist fellow in Digital/Electronic Arts<br><br><br><br><a href="www.lovid.org">www.lovid.org</a></div>
+				<div id= "background-right">We'd love to see what you can make out of these translated objects and we hope that they can continue to evolve in various forms across the globe. Please let us know if and when you print! one email us at lovidlovid at gmail dot com.<br><br>We will be posting images of all prints online and have some cash awards for the most enthusiastic participants. email us for information, questions, or submissions.<br><br>Young Antiquities is made possible with funds from the New York State Council on the Arts in Partnership with Wave Farm: Media Arts Assistance Fund, a regrant program of the New York State Council on the Arts, Electronic Media and Film Program, with the support of Governor Andrew Cuomo and the New York State Legislature. Web and 3D development by Rebecca Uliasz.</div>
+<div id="container">
+<div class="container-row">
+					<a href="obj/lovid/Scan2/colorscan3-ColorScan3.obj" download="object1.obj" class="dbldownload"><canvas id="canvas1"></a>
 						</canvas>
 						<a href="obj/lovid/Scan1/scan1.obj" download="object2.obj" class="dbldownload" ><canvas id="canvas2"></canvas></a>
 						<a href="obj/lovid/Scan3/colorscanfused1-ColorScanFused1.obj" download="object3.obj" class="dbldownload" ><canvas id="canvas3"></canvas></a>
@@ -68,10 +109,14 @@
 					<div class="container-row">
 						<a href="obj/lovid/Scan7/scan7.obj" download="object7.obj" class="dbldownload"><canvas id="canvas7"></canvas></a>
 						<a href="obj/lovid/Scan8/scan8.obj" download="object5.obj" class="dbldownload"><canvas id="canvas8"></canvas></a>
-						<canvas id="canvas9"></canvas>
-					</div>
+						<div id="canvas9">
+						  <p id="instruction-text">Move mouse to pan over obejcts. <br>
+						    Click on object to zoom in. <br>
+						    Double click on object to download printable file.</p>
+</div>
+</div>
 				</div>
-			</div>
+</div>
 		</div>
 		<div id="info">Young Antiquties</div>
 		
@@ -120,11 +165,11 @@
 
 			var mouse = new THREE.Vector2();
 			var mouseDown = false;
-			var raycaster;
-			var raycasters = []; 
-			var intersection = null;
+			//var raycaster;
+			//var raycasters = []; 
+			//var intersection = null;
 			var rotateY = new THREE.Matrix4().makeRotationY( 0.005 );
-			var projector = new THREE.Projector();
+			//var projector = new THREE.Projector();
 
 			var object1; 
 			var object2; 
@@ -159,19 +204,19 @@
 					renderer.render( scene, camera );
 					context.drawImage( renderer.domElement, 0, 0 );
 
-					raycaster.setFromCamera( mouse, camera );
+					//raycaster.setFromCamera( mouse, camera );
 
 					//controls.update();
 				};
 				//raycaster 
+				/*
 				var vector = new THREE.Vector3( ( mouseX / window.innerWidth ) * 2 - 1, - ( mouseY / window.innerHeight ) * 2 + 1, 0.5 );
             	vector.unproject( camera );
 
             	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
             	raycasters.push( raycaster ); 
-
-
 				//cameras.push(camera); 
+				*/
 				
 
 			}
@@ -185,7 +230,7 @@
 				var canvas6 = document.getElementById( 'canvas6' );
 				var canvas7 = document.getElementById( 'canvas7' );
 				var canvas8 = document.getElementById( 'canvas8' );
-				var canvas9 = document.getElementById( 'canvas9' );
+				//var canvas9 = document.getElementById( 'canvas9' );
 				var w = 300, h = 200;
 				var fullWidth = w * 3;
 				var fullHeight = h * 3;
@@ -198,7 +243,7 @@
 				views.push( new View( canvas6, fullWidth, fullHeight, w * 2, h * 1, w, h ) );
 				views.push( new View( canvas7, fullWidth, fullHeight, w * 0, h * 2, w, h ) );
 				views.push( new View( canvas8, fullWidth, fullHeight, w * 1, h * 2, w, h ) );
-				views.push( new View( canvas9, fullWidth, fullHeight, w * 2, h * 2, w, h ) );
+				//views.push( new View( canvas9, fullWidth, fullHeight, w * 2, h * 2, w, h ) );
 
 
 				scene = new THREE.Scene();
@@ -233,7 +278,6 @@
 				canvas.width = 128;
 				canvas.height = 128;
 				var context = canvas.getContext( '2d' );
-
 
 
 				// mtl and obj model loader v 1 
@@ -430,7 +474,8 @@
 				var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
 		
 				
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+				renderer.setClearColor( 0xffffff, 0 );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( 300, 200 );
 				document.body.appendChild(renderer.domElement);
@@ -474,7 +519,7 @@
 			var mouseClick6 = false;
 			var mouseClick7 = false;
 			var mouseClick8 = false;
-			var mouseClick9 = false;
+			//var mouseClick9 = false;
 
 			function onCanvas1MouseMove( event ) { 
 				
@@ -482,13 +527,6 @@
             		return;
         		} 
         	 	
-        		/*evt.preventDefault();
-        		var object1 = objects[0];
-        		var deltaX = evt.clientX - mouseX, 
-            		deltaY = evt.clientY - mouseY;
-        		mouseX = evt.clientX;
-        		mouseY = evt.clientY;
-        		rotateScene1(deltaX, deltaY);*/
     		}
 
     		function onCanvas1MouseDown( event ) {
@@ -498,10 +536,7 @@
 				} else if (mouseClick1 == true){
 					mouseClick1 = false; 
 				}
-				//console.log(mouseClick1);
-				console.log(object1); 
-				if (mouseClick1 == true) {
-					//saveAs(object1, 'object1.obj');  
+				if (mouseClick1 == true) { 
 					object1.position.x = 0; 
 					object1.position.y = 0; 
 					while (object1.position.z <= 50.) {
@@ -690,17 +725,19 @@
 			// click on object
 			function onDocumentMouseDown( event ) {
 				event.preventDefault();
-
-				/*var raycaster = raycasters[0]; 
-				var intersects1 = raycaster.intersectObject( object1, true );
+				/*
+				var raycaster1 = raycasters[0]; 
+				var raycaster2 = raycasters[1]; 
+				var raycaster3 = raycasters[2];
+				var intersects1 = raycaster1.intersectObject( object1, true );
             	if ( intersects1.length > 0 ) {
                     console.log("intersected1");
                 }
-                var intersects2 = raycaster.intersectObject( object2, true );
+                var intersects2 = raycaster2.intersectObject( object2, true );
                 if ( intersects2.length > 0 ) {
                     console.log("intersected2");
                 }
-                var intersects3 = raycaster.intersectObject( object3, true );
+                var intersects3 = raycaster3.intersectObject( object3, true );
                 if ( intersects3.length > 0 ) {
                     console.log("intersected3");
                 }*/
@@ -766,34 +803,8 @@
 				requestAnimationFrame( animate );
 				
 			}
-
-			function render2() {
-
 				
-				//renderer.render( scene, camera ); 
-			}
 
-/*
-			function render() {
-
-				raycaster.setFromCamera( mouse, camera );
-
-				var intersects = raycaster.intersectObjects( scene.canvas );
-
-				if ( intersects.length > 0 ) {
-					if ( INTERSECTED != intersects[ 0 ].object ) {
-						if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
-						INTERSECTED = intersects[ 0 ].object;
-						INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-						INTERSECTED.material.emissive.setHex( 0xff0000 );
-					}
-				} else {
-					if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
-					INTERSECTED = null;
-				}
-				renderer.render( scene, camera )
-
-			}*/
 		</script>
 
 	</body>
